@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/etMenuName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Menu Item Name" />
+
+    <EditText
+        android:id="@+id/etMenuPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Price" />
+
+    <EditText
+        android:id="@+id/etMenuImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Image Path" />
+
+    <EditText
+        android:id="@+id/etMenuCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Category" />
+
+    <Button
+        android:id="@+id/btnSaveChanges"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Changes" />
+
+</LinearLayout>

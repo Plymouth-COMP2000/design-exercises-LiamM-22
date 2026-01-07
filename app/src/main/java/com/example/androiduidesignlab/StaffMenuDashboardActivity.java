@@ -21,12 +21,23 @@ public class StaffMenuDashboardActivity extends AppCompatActivity {
             }
         });
 
-        View.OnClickListener menuCategoryClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(StaffMenuDashboardActivity.this, StaffMenuCategoryActivity.class);
-                startActivity(intent);
+        View.OnClickListener menuCategoryClickListener = v -> {
+            Intent intent = new Intent(StaffMenuDashboardActivity.this, StaffMenuCategoryActivity.class);
+            String category = "";
+            int id = v.getId();
+            if (id == R.id.btnStarters) {
+                category = "Starters";
+            } else if (id == R.id.btnMains) {
+                category = "Mains";
+            } else if (id == R.id.btnDesserts) {
+                category = "Desserts";
+            } else if (id == R.id.btnDrinks) {
+                category = "Drinks";
+            } else if (id == R.id.btnOffers) {
+                category = "Offers";
             }
+            intent.putExtra("category", category);
+            startActivity(intent);
         };
 
         findViewById(R.id.btnStarters).setOnClickListener(menuCategoryClickListener);

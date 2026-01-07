@@ -33,7 +33,7 @@
         <activity android:name=".StaffMenuDashboardActivity" />
         <activity android:name=".StaffReservationEditActivity" />
         <activity android:name=".StaffMenuCategoryActivity" />
-        <activity android:name=".AddEditMenuItemActivity" />
+        <activity android:name=".StaffMenuEditActivity" />
     </application>
 
 </manifest>
