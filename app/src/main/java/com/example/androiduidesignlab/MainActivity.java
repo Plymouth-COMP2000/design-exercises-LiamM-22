@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void createInitialUsers() {
         // Create staff user
-        apiService.createUser("staff", "password123", "staff", new ApiService.ApiResponseListener() {
+        apiService.createUser("staff", "password123", "", "", "", "", "staff", new ApiService.ApiResponseListener() {
             @Override
             public void onSuccess(JSONObject response) {
                 Toast.makeText(MainActivity.this, "Staff user created successfully", Toast.LENGTH_SHORT).show();
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Create customer user
-        apiService.createUser("customer", "customer123", "student", new ApiService.ApiResponseListener() {
+        apiService.createUser("customer", "customer123", "", "", "", "", "student", new ApiService.ApiResponseListener() {
             @Override
             public void onSuccess(JSONObject response) {
                 Toast.makeText(MainActivity.this, "Customer user created successfully", Toast.LENGTH_SHORT).show();

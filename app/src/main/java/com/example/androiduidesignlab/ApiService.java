@@ -84,16 +84,16 @@ public class ApiService {
         addToRequestQueue(jsonObjectRequest);
     }
 
-    public void createUser(String username, String password, String usertype, ApiResponseListener listener) {
+    public void createUser(String username, String password, String firstname, String lastname, String email, String contact, String usertype, ApiResponseListener listener) {
         String url = BASE_URL + "create_user/" + STUDENT_ID;
         JSONObject requestBody = new JSONObject();
         try {
             requestBody.put("username", username);
             requestBody.put("password", password);
-            requestBody.put("firstname", "Test");
-            requestBody.put("lastname", "User");
-            requestBody.put("email", "test@user.com");
-            requestBody.put("contact", "12345");
+            requestBody.put("firstname", firstname);
+            requestBody.put("lastname", lastname);
+            requestBody.put("email", email);
+            requestBody.put("contact", contact);
             requestBody.put("usertype", usertype);
         } catch (JSONException e) {
             listener.onError("Error creating request body: " + e.getMessage());
