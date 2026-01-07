@@ -13,12 +13,23 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_dashboard);
 
-        View.OnClickListener menuClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DashboardActivity.this, MenuCategoryActivity.class);
-                startActivity(intent);
+        View.OnClickListener menuClickListener = v -> {
+            Intent intent = new Intent(DashboardActivity.this, MenuCategoryActivity.class);
+            String category = "";
+            int id = v.getId();
+            if (id == R.id.btnStarters) {
+                category = "Starters";
+            } else if (id == R.id.btnMains) {
+                category = "Mains";
+            } else if (id == R.id.btnDesserts) {
+                category = "Desserts";
+            } else if (id == R.id.btnDrinks) {
+                category = "Drinks";
+            } else if (id == R.id.btnOffers) {
+                category = "Offers";
             }
+            intent.putExtra("category", category);
+            startActivity(intent);
         };
 
         findViewById(R.id.btnStarters).setOnClickListener(menuClickListener);
@@ -27,20 +38,14 @@ public class DashboardActivity extends AppCompatActivity {
         findViewById(R.id.btnDrinks).setOnClickListener(menuClickListener);
         findViewById(R.id.btnOffers).setOnClickListener(menuClickListener);
 
-        findViewById(R.id.btnReservations).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DashboardActivity.this, CustomerReservationDashboardActivity.class);
-                startActivity(intent);
-            }
+        findViewById(R.id.btnReservations).setOnClickListener(v -> {
+            Intent intent = new Intent(DashboardActivity.this, CustomerReservationDashboardActivity.class);
+            startActivity(intent);
         });
 
-        findViewById(R.id.btnProfile).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DashboardActivity.this, CustomerSettingsActivity.class);
-                startActivity(intent);
-            }
+        findViewById(R.id.btnProfile).setOnClickListener(v -> {
+            Intent intent = new Intent(DashboardActivity.this, CustomerSettingsActivity.class);
+            startActivity(intent);
         });
     }
 }

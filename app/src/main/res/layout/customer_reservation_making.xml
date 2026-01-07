@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E8E8E8"
-    tools:context=".BookingActivity">
+    tools:context=".CustomerReservationMakingActivity">
 
     <!-- Top Header Bar -->
     <LinearLayout
@@ -67,24 +67,31 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-            <!-- Calendar Container -->
+            <!-- Date Selection Container -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:background="#C0C0C0"
                 android:gravity="center"
-                android:minHeight="200dp"
                 android:orientation="vertical"
                 android:padding="16dp">
 
                 <TextView
+                    android:id="@+id/tvSelectedDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Calendar"
+                    android:text="Selected Date"
                     android:textColor="#000000"
                     android:textSize="20sp"
                     android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnChangeDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Change Date" />
 
             </LinearLayout>
 
@@ -120,9 +127,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Available times"
+                        android:text="7:00 PM"
                         android:textColor="#000000"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:tag="time_text" />
 
                 </LinearLayout>
 
@@ -149,9 +157,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Available times"
+                        android:text="9:00 PM"
                         android:textColor="#000000"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:tag="time_text" />
 
                 </LinearLayout>
 

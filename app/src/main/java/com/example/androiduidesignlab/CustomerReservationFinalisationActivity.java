@@ -2,57 +2,60 @@ package com.example.androiduidesignlab;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class CustomerReservationFinalisationActivity extends AppCompatActivity {
+
+    private DatabaseHelper db;
+    private long reservationId = -1;
+    private String reservationDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_reservation_finalisation);
 
-        // Back button to customer_reservation_making
-        findViewById(R.id.backButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CustomerReservationFinalisationActivity.this, CustomerReservationMakingActivity.class);
-                startActivity(intent);
-            }
-        });
+        db = new DatabaseHelper(this);
 
-        // Confirm Booking Button
-        findViewById(R.id.btnConfirmBooking).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CustomerReservationFinalisationActivity.this, CustomerReservationDashboardActivity.class);
-                startActivity(intent);
+        reservationId = getIntent().getLongExtra("reservation_id", -1);
+        reservationDetails = getIntent().getStringExtra("reservation_details");
+
+        TextView tvReservationDetails = findViewById(R.id.tvReservationDetails);
+        if (reservationDetails != null) {
+            tvReservationDetails.setText(reservationDetails);
+        }
+
+        findViewById(R.id.backButton).setOnClickListener(v -> finish());
+
+        Button btnConfirmBooking = findViewById(R.id.btnConfirmBooking);
+        btnConfirmBooking.setOnClickListener(v -> {
+            if (reservationId != -1) {
+                db.updateReservation(new Reservation(reservationId, reservationDetails));
+            } else {
+                db.addReservation(new Reservation(reservationDetails));
             }
+            Intent intent = new Intent(CustomerReservationFinalisationActivity.this, CustomerReservationDashboardActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         });
 
         // Bottom Navigation
-        findViewById(R.id.btnReservations).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CustomerReservationFinalisationActivity.this, CustomerReservationDashboardActivity.class);
-                startActivity(intent);
-            }
+        findViewById(R.id.btnReservations).setOnClickListener(v -> {
+            Intent intent = new Intent(CustomerReservationFinalisationActivity.this, CustomerReservationDashboardActivity.class);
+            startActivity(intent);
         });
 
-        findViewById(R.id.btnMenu).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CustomerReservationFinalisationActivity.this, DashboardActivity.class);
-                startActivity(intent);
-            }
+        findViewById(R.id.btnMenu).setOnClickListener(v -> {
+            Intent intent = new Intent(CustomerReservationFinalisationActivity.this, DashboardActivity.class);
+            startActivity(intent);
         });
 
-        findViewById(R.id.btnProfile).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CustomerReservationFinalisationActivity.this, CustomerSettingsActivity.class);
-                startActivity(intent);
-            }
+        findViewById(R.id.btnProfile).setOnClickListener(v -> {
+            Intent intent = new Intent(CustomerReservationFinalisationActivity.this, CustomerSettingsActivity.class);
+            startActivity(intent);
         });
     }
 }
