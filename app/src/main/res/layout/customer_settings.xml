@@ -91,12 +91,8 @@
         <LinearLayout
             android:id="@+id/notificationSettingsSection"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:background="#C0C0C0"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center"
             android:orientation="vertical"
             android:padding="16dp">
 
@@ -107,6 +103,15 @@
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
+            <Switch
+                android:id="@+id/switchNotifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Enable Notifications"
+                android:textSize="18sp"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         </LinearLayout>
 

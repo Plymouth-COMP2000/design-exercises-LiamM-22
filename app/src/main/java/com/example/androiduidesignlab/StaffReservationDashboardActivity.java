@@ -1,9 +1,12 @@
 package com.example.androiduidesignlab;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import android.Manifest;
+import android.content.pm.PackageManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -12,10 +15,12 @@ import java.util.List;
 
 public class StaffReservationDashboardActivity extends AppCompatActivity implements ReservationsAdapter.OnReservationListener {
 
+    private static final int NOTIFICATION_PERMISSION_CODE = 101;
     private RecyclerView rvReservations;
     private ReservationsAdapter reservationsAdapter;
     private List<Reservation> reservationList;
     private DatabaseHelper db;
+    private NotificationService notificationService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +28,16 @@ public class StaffReservationDashboardActivity extends AppCompatActivity impleme
         setContentView(R.layout.staff_reservation_dashboard);
 
         db = new DatabaseHelper(this);
+        notificationService = new NotificationService(this);
 
-        // Back button to staff_dashboard
-        findViewById(R.id.backButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(StaffReservationDashboardActivity.this, StaffDashboardActivity.class);
-                startActivity(intent);
-            }
+        // Request notification permission if not already granted
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, NOTIFICATION_PERMISSION_CODE);
+        }
+
+        findViewById(R.id.backButton).setOnClickListener(v -> {
+            Intent intent = new Intent(StaffReservationDashboardActivity.this, StaffDashboardActivity.class);
+            startActivity(intent);
         });
 
         rvReservations = findViewById(R.id.rvReservations);
@@ -47,9 +54,7 @@ public class StaffReservationDashboardActivity extends AppCompatActivity impleme
         });
 
         // Bottom Navigation
-        findViewById(R.id.btnReservations).setOnClickListener(v -> {
-            // Already on this screen
-        });
+        findViewById(R.id.btnReservations).setOnClickListener(v -> {});
 
         findViewById(R.id.staffBtnMenu).setOnClickListener(v -> {
             Intent intent = new Intent(StaffReservationDashboardActivity.this, StaffMenuDashboardActivity.class);
@@ -85,6 +90,14 @@ public class StaffReservationDashboardActivity extends AppCompatActivity impleme
     @Override
     public void onRemoveClick(long id) {
         db.deleteReservation(id);
+        
+        SharedPreferences prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        boolean notificationsEnabled = prefs.getBoolean("notifications_enabled_staff", true);
+
+        if (notificationsEnabled) {
+            notificationService.showNotification("Reservation Cancelled", "A reservation has been cancelled.");
+        }
+
         refreshReservationList();
     }
 }
