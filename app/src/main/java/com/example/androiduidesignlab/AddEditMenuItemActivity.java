@@ -12,7 +12,6 @@ public class AddEditMenuItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.staff_edit_menu);
 
-        // Back button to staff_menu_category
         findViewById(R.id.backButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -21,7 +20,6 @@ public class AddEditMenuItemActivity extends AppCompatActivity {
             }
         });
 
-        // Confirm button
         findViewById(R.id.btnConfirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -29,7 +27,6 @@ public class AddEditMenuItemActivity extends AppCompatActivity {
             }
         });
 
-        // Bottom Navigation
         findViewById(R.id.btnReservations).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

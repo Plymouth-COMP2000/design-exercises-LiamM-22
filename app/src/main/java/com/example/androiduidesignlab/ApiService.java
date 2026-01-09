@@ -116,7 +116,6 @@ public class ApiService {
                 String responseBody = new String(networkResponse.data, "utf-8");
                 errorMessage += ": " + responseBody;
             } catch (UnsupportedEncodingException e) {
-                // ignore
             }
         } else if (error.getMessage() != null) {
             errorMessage += ": " + error.getMessage();

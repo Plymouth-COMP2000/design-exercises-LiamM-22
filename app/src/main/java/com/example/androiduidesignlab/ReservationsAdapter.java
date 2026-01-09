@@ -17,7 +17,7 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
     private final OnReservationListener onReservationListener;
 
     public interface OnReservationListener {
-        void onEditClick(long id, String details);
+        void onEditClick(long id, String username, String date, String time, int guests, String details);
         void onRemoveClick(long id);
     }
 
@@ -36,11 +36,12 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
     @Override
     public void onBindViewHolder(@NonNull ReservationViewHolder holder, int position) {
         Reservation reservation = reservations.get(position);
-        holder.tvReservationDetails.setText(reservation.getReservationDetails());
+        holder.tvReservationDetails.setText(reservation.getFullDescription());
+        holder.tvGuestCount.setText("Guests: " + reservation.getGuests());
 
         holder.btnEditReservation.setOnClickListener(v -> {
             if (onReservationListener != null) {
-                onReservationListener.onEditClick(reservation.getId(), reservation.getReservationDetails());
+                onReservationListener.onEditClick(reservation.getId(), reservation.getUsername(), reservation.getDate(), reservation.getTime(), reservation.getGuests(), reservation.getReservationDetails());
             }
         });
 
@@ -58,12 +59,14 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
 
     public static class ReservationViewHolder extends RecyclerView.ViewHolder {
         TextView tvReservationDetails;
+        TextView tvGuestCount;
         Button btnEditReservation;
         Button btnRemoveReservation;
 
         public ReservationViewHolder(@NonNull View itemView) {
             super(itemView);
             tvReservationDetails = itemView.findViewById(R.id.tvReservationDetails);
+            tvGuestCount = itemView.findViewById(R.id.tvGuestCount);
             btnEditReservation = itemView.findViewById(R.id.btnEditReservation);
             btnRemoveReservation = itemView.findViewById(R.id.btnRemoveReservation);
         }

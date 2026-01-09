@@ -39,7 +39,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         Menu menuItem = menuItems.get(position);
         holder.tvMenuName.setText(menuItem.getName());
         holder.tvMenuPrice.setText(String.format("£%.2f", menuItem.getPrice()));
-        // In a real app, you'd load the image from the path. For now, we'll just set a placeholder.
         holder.ivMenuImage.setImageResource(R.drawable.ic_launcher_background);
 
         holder.btnEditMenu.setOnClickListener(v -> {

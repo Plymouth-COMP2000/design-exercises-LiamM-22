@@ -32,7 +32,7 @@
         android:id="@+id/scrollContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottomNavBar"
+        android:layout_above="@+id/homeButtonContainer"
         android:layout_below="@+id/topHeader"
         android:padding="16dp">
 
@@ -42,34 +42,6 @@
             android:orientation="vertical"
             android:gravity="center">
 
-            <!-- Back Button -->
-            <LinearLayout
-                android:id="@+id/backButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginBottom="16dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:contentDescription="Back arrow"
-                    android:src="@android:drawable/ic_menu_revert" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="Back"
-                    android:textColor="#000000"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <!-- Starters Button -->
             <Button
                 android:id="@+id/btnStarters"
                 android:layout_width="match_parent"
@@ -81,7 +53,6 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <!-- Mains Button -->
             <Button
                 android:id="@+id/btnMains"
                 android:layout_width="match_parent"
@@ -93,7 +64,6 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <!-- Desserts Button -->
             <Button
                 android:id="@+id/btnDesserts"
                 android:layout_width="match_parent"
@@ -105,7 +75,6 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <!-- Drinks Button -->
             <Button
                 android:id="@+id/btnDrinks"
                 android:layout_width="match_parent"
@@ -117,7 +86,6 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <!-- Offers Button -->
             <Button
                 android:id="@+id/btnOffers"
                 android:layout_width="match_parent"
@@ -131,6 +99,24 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/homeButtonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottomNavBar"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/btnHome"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:backgroundTint="#81B29A"
+            android:text="Home"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <!-- Bottom Navigation Bar -->
     <LinearLayout

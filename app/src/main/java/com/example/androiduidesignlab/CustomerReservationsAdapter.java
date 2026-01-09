@@ -17,7 +17,7 @@ public class CustomerReservationsAdapter extends RecyclerView.Adapter<CustomerRe
     private final OnReservationListener onReservationListener;
 
     public interface OnReservationListener {
-        void onEditClick(long id, String details);
+        void onEditClick(long id, String date, String time, int guests, String details);
         void onCancelClick(long id);
     }
 
@@ -36,11 +36,12 @@ public class CustomerReservationsAdapter extends RecyclerView.Adapter<CustomerRe
     @Override
     public void onBindViewHolder(@NonNull ReservationViewHolder holder, int position) {
         Reservation reservation = reservations.get(position);
-        holder.tvReservationDetails.setText(reservation.getReservationDetails());
+        
+        holder.tvReservationDetails.setText(reservation.getFullDescription());
 
         holder.btnEditReservation.setOnClickListener(v -> {
             if (onReservationListener != null) {
-                onReservationListener.onEditClick(reservation.getId(), reservation.getReservationDetails());
+                onReservationListener.onEditClick(reservation.getId(), reservation.getDate(), reservation.getTime(), reservation.getGuests(), reservation.getReservationDetails());
             }
         });
 

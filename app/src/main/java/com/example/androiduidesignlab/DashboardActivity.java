@@ -3,7 +3,6 @@ package com.example.androiduidesignlab;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -38,14 +37,9 @@ public class DashboardActivity extends AppCompatActivity {
         findViewById(R.id.btnDrinks).setOnClickListener(menuClickListener);
         findViewById(R.id.btnOffers).setOnClickListener(menuClickListener);
 
-        findViewById(R.id.btnReservations).setOnClickListener(v -> {
-            Intent intent = new Intent(DashboardActivity.this, CustomerReservationDashboardActivity.class);
-            startActivity(intent);
+        findViewById(R.id.btnReservations).setOnClickListener(v -> startActivity(new Intent(this, CustomerReservationDashboardActivity.class)));
+        findViewById(R.id.btnMenu).setOnClickListener(v -> {
         });
-
-        findViewById(R.id.btnProfile).setOnClickListener(v -> {
-            Intent intent = new Intent(DashboardActivity.this, CustomerSettingsActivity.class);
-            startActivity(intent);
-        });
+        findViewById(R.id.btnProfile).setOnClickListener(v -> startActivity(new Intent(this, CustomerSettingsActivity.class)));
     }
 }

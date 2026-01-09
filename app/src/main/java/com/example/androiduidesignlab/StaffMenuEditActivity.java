@@ -34,12 +34,12 @@ public class StaffMenuEditActivity extends AppCompatActivity {
         String menuImage = getIntent().getStringExtra("menu_image");
         String menuCategory = getIntent().getStringExtra("menu_category");
 
-        if (menuId != -1) { // Existing item
+        if (menuId != -1) {
             etMenuName.setText(menuName);
             etMenuPrice.setText(String.valueOf(menuPrice));
             etMenuImage.setText(menuImage);
             etMenuCategory.setText(menuCategory);
-        } else { // New item
+        } else {
             etMenuCategory.setText(menuCategory);
         }
 

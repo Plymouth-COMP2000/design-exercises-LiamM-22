@@ -5,7 +5,7 @@
     android:layout_marginBottom="8dp"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    android:padding="12dp">
+    android.padding="12dp">
 
     <TextView
         android:id="@+id/tvReservationDetails"
@@ -16,6 +16,8 @@
         android:textColor="#000000"
         android:textSize="16sp"
         android:textStyle="bold" />
+
+    <!-- The redundant TextView that was causing the display bug has been removed -->
 
     <LinearLayout
         android:layout_width="match_parent"

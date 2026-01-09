@@ -46,7 +46,6 @@ public class StaffMenuCategoryActivity extends AppCompatActivity implements Menu
             startActivity(intent);
         });
 
-        // Bottom Navigation
         findViewById(R.id.btnReservations).setOnClickListener(v -> {
             Intent intent = new Intent(StaffMenuCategoryActivity.this, StaffReservationDashboardActivity.class);
             startActivity(intent);

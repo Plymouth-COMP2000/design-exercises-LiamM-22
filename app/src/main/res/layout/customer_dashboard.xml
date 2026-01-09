@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E8E8E8"
-    tools:context=".MenuActivity">
+    tools:context=".DashboardActivity">
 
     <!-- Top Header Bar -->
     <LinearLayout
@@ -28,14 +28,12 @@
 
     </LinearLayout>
 
-    <!-- Main Content ScrollView -->
     <ScrollView
         android:id="@+id/scrollContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomNavBar"
         android:layout_below="@+id/topHeader"
-        android:fillViewport="true"
         android:padding="16dp">
 
         <LinearLayout
@@ -44,7 +42,6 @@
             android:orientation="vertical"
             android:gravity="center">
 
-            <!-- Starters Button -->
             <Button
                 android:id="@+id/btnStarters"
                 android:layout_width="match_parent"
@@ -56,7 +53,6 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <!-- Mains Button -->
             <Button
                 android:id="@+id/btnMains"
                 android:layout_width="match_parent"
@@ -68,7 +64,6 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <!-- Desserts Button -->
             <Button
                 android:id="@+id/btnDesserts"
                 android:layout_width="match_parent"
@@ -80,7 +75,6 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <!-- Drinks Button -->
             <Button
                 android:id="@+id/btnDrinks"
                 android:layout_width="match_parent"
@@ -92,7 +86,6 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <!-- Offers Button -->
             <Button
                 android:id="@+id/btnOffers"
                 android:layout_width="match_parent"

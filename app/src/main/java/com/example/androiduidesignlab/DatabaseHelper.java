@@ -12,32 +12,37 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "restaurant.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 10;
 
-    // Table Names
     public static final String TABLE_RESERVATIONS = "reservations";
     public static final String TABLE_MENU = "menu";
 
-    // Common column names
     public static final String KEY_ID = "id";
 
-    // RESERVATIONS Table - column names
+    public static final String KEY_RESERVATION_USERNAME = "username";
+    public static final String KEY_RESERVATION_DATE = "date";
+    public static final String KEY_RESERVATION_TIME = "time";
+    public static final String KEY_RESERVATION_GUESTS = "guests";
     public static final String KEY_RESERVATION_DETAILS = "reservation_details";
 
-    // MENU Table - column names
     public static final String KEY_MENU_NAME = "name";
     public static final String KEY_MENU_PRICE = "price";
     public static final String KEY_MENU_IMAGE = "image";
     public static final String KEY_MENU_CATEGORY = "category";
 
-    // Table Create Statements
     private static final String CREATE_TABLE_RESERVATIONS = "CREATE TABLE "
             + TABLE_RESERVATIONS + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + KEY_RESERVATION_USERNAME + " TEXT,"
+            + KEY_RESERVATION_DATE + " TEXT,"
+            + KEY_RESERVATION_TIME + " TEXT,"
+            + KEY_RESERVATION_GUESTS + " INTEGER,"
             + KEY_RESERVATION_DETAILS + " TEXT)";
 
     private static final String CREATE_TABLE_MENU = "CREATE TABLE " + TABLE_MENU + "("
-            + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_MENU_NAME + " TEXT,"
-            + KEY_MENU_PRICE + " REAL," + KEY_MENU_IMAGE + " TEXT,"
+            + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + KEY_MENU_NAME + " TEXT,"
+            + KEY_MENU_PRICE + " REAL,"
+            + KEY_MENU_IMAGE + " TEXT,"
             + KEY_MENU_CATEGORY + " TEXT)";
 
     public DatabaseHelper(Context context) {
@@ -57,52 +62,73 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Adding new reservation
     public void addReservation(Reservation reservation) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(KEY_RESERVATION_USERNAME, reservation.getUsername());
+        values.put(KEY_RESERVATION_DATE, reservation.getDate());
+        values.put(KEY_RESERVATION_TIME, reservation.getTime());
+        values.put(KEY_RESERVATION_GUESTS, reservation.getGuests());
         values.put(KEY_RESERVATION_DETAILS, reservation.getReservationDetails());
         db.insert(TABLE_RESERVATIONS, null, values);
         db.close();
     }
 
-    // Getting all reservations
-    public List<Reservation> getAllReservations() {
+    private List<Reservation> getReservationsFromCursor(Cursor cursor) {
         List<Reservation> reservationList = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM " + TABLE_RESERVATIONS;
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
         if (cursor.moveToFirst()) {
             do {
-                Reservation reservation = new Reservation(cursor.getLong(0), cursor.getString(1));
+                Reservation reservation = new Reservation(
+                        cursor.getLong(cursor.getColumnIndexOrThrow(KEY_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(KEY_RESERVATION_USERNAME)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(KEY_RESERVATION_DATE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(KEY_RESERVATION_TIME)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(KEY_RESERVATION_GUESTS)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(KEY_RESERVATION_DETAILS))
+                );
                 reservationList.add(reservation);
             } while (cursor.moveToNext());
         }
-        cursor.close();
-        db.close();
         return reservationList;
     }
 
-    // Updating single reservation
+    public List<Reservation> getReservationsForUser(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_RESERVATIONS, null, KEY_RESERVATION_USERNAME + " = ?", new String[]{username}, null, null, null);
+        List<Reservation> reservations = getReservationsFromCursor(cursor);
+        cursor.close();
+        db.close();
+        return reservations;
+    }
+
+    public List<Reservation> getReservationsByDate(String date) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_RESERVATIONS, null, KEY_RESERVATION_DATE + " = ?", new String[]{date}, null, null, null);
+        List<Reservation> reservations = getReservationsFromCursor(cursor);
+        cursor.close();
+        db.close();
+        return reservations;
+    }
+
     public int updateReservation(Reservation reservation) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(KEY_RESERVATION_USERNAME, reservation.getUsername());
+        values.put(KEY_RESERVATION_DATE, reservation.getDate());
+        values.put(KEY_RESERVATION_TIME, reservation.getTime());
+        values.put(KEY_RESERVATION_GUESTS, reservation.getGuests());
         values.put(KEY_RESERVATION_DETAILS, reservation.getReservationDetails());
 
         return db.update(TABLE_RESERVATIONS, values, KEY_ID + " = ?",
                 new String[]{String.valueOf(reservation.getId())});
     }
 
-    // Deleting single reservation
     public void deleteReservation(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_RESERVATIONS, KEY_ID + " = ?",
-                new String[]{String.valueOf(id)});
+        db.delete(TABLE_RESERVATIONS, KEY_ID + " = ?", new String[]{String.valueOf(id)});
         db.close();
     }
 
-    // Adding new menu item
     public void addMenuItem(Menu menu) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -114,25 +140,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    // Getting all menu items
-    public List<Menu> getAllMenuItems() {
-        List<Menu> menuList = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM " + TABLE_MENU;
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                Menu menu = new Menu(cursor.getLong(0), cursor.getString(1), cursor.getDouble(2), cursor.getString(3), cursor.getString(4));
-                menuList.add(menu);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return menuList;
-    }
-
-    // Getting all menu items by category
     public List<Menu> getMenuItemsByCategory(String category) {
         List<Menu> menuList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -141,7 +148,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                Menu menu = new Menu(cursor.getLong(0), cursor.getString(1), cursor.getDouble(2), cursor.getString(3), cursor.getString(4));
+                Menu menu = new Menu(
+                        cursor.getLong(cursor.getColumnIndexOrThrow(KEY_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(KEY_MENU_NAME)),
+                        cursor.getDouble(cursor.getColumnIndexOrThrow(KEY_MENU_PRICE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(KEY_MENU_IMAGE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(KEY_MENU_CATEGORY))
+                );
                 menuList.add(menu);
             } while (cursor.moveToNext());
         }
@@ -150,7 +163,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return menuList;
     }
 
-    // Updating single menu item
     public int updateMenuItem(Menu menu) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -163,11 +175,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(menu.getId())});
     }
 
-    // Deleting single menu item
     public void deleteMenuItem(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_MENU, KEY_ID + " = ?",
-                new String[]{String.valueOf(id)});
+        db.delete(TABLE_MENU, KEY_ID + " = ?", new String[]{String.valueOf(id)});
         db.close();
     }
 }

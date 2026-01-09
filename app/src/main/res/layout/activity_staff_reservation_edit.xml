@@ -1,20 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp">
 
-    <EditText
-        android:id="@+id/etReservationDetails"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Reservation Details" />
+        android:orientation="vertical"
+        android:layout_alignParentTop="true">
 
-    <Button
-        android:id="@+id/btnSaveChanges"
+        <EditText
+            android:id="@+id/etReservationDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date (YYYY-MM-DD)" />
+
+        <EditText
+            android:id="@+id/etReservationTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Time" />
+
+        <EditText
+            android:id="@+id/etNumberOfGuests"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Number of Guests"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/etReservationDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Reservation Details" />
+
+        <Button
+            android:id="@+id/btnSaveChanges"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Changes" />
+    </LinearLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save Changes" />
+        android:layout_alignParentBottom="true">
 
-</LinearLayout>
+        <include layout="@layout/staff_home_button" />
+
+    </FrameLayout>
+
+</RelativeLayout>

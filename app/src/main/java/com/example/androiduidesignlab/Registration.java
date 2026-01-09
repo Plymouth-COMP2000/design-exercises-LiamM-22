@@ -20,7 +20,6 @@ public class Registration extends AppCompatActivity {
 
         apiService = ApiService.getInstance(this);
 
-        // Initialize views
         etUsername = findViewById(R.id.etUsernameInput);
         etFirstName = findViewById(R.id.etFirstName);
         etLastName = findViewById(R.id.etLastName);
@@ -30,11 +29,9 @@ public class Registration extends AppCompatActivity {
         etConfirmPassword = findViewById(R.id.etConfirmPasswordInput);
         btnCreateAccount = findViewById(R.id.btnCreateAccount);
 
-        // Back buttons
         findViewById(R.id.ivBackArrow).setOnClickListener(v -> finish());
         findViewById(R.id.tvBackText).setOnClickListener(v -> finish());
 
-        // Create account button listener
         btnCreateAccount.setOnClickListener(v -> createAccount());
     }
 
@@ -46,9 +43,8 @@ public class Registration extends AppCompatActivity {
         String contact = etContact.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         String confirmPassword = etConfirmPassword.getText().toString().trim();
-        String usertype = "student"; // Hardcoded to student
+        String usertype = "student";
 
-        // Validation
         if (username.isEmpty() || firstname.isEmpty() || lastname.isEmpty() || email.isEmpty() || contact.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
@@ -63,7 +59,7 @@ public class Registration extends AppCompatActivity {
             @Override
             public void onSuccess(JSONObject response) {
                 Toast.makeText(Registration.this, "Account created successfully!", Toast.LENGTH_SHORT).show();
-                finish(); // Go back to login screen
+                finish();
             }
 
             @Override

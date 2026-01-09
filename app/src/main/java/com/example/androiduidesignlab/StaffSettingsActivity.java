@@ -17,34 +17,19 @@ public class StaffSettingsActivity extends AppCompatActivity {
 
         switchNotifications = findViewById(R.id.switchNotifications);
 
-        // Load preference
         SharedPreferences prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
         boolean notificationsEnabled = prefs.getBoolean("notifications_enabled_staff", true);
         switchNotifications.setChecked(notificationsEnabled);
 
-        // Save preference on change
         switchNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean("notifications_enabled_staff", isChecked);
             editor.apply();
         });
 
-        // Back button
-        findViewById(R.id.backButton).setOnClickListener(v -> finish());
-
-        // Bottom Navigation
-        findViewById(R.id.btnReservations).setOnClickListener(v -> {
-            Intent intent = new Intent(StaffSettingsActivity.this, StaffReservationDashboardActivity.class);
-            startActivity(intent);
-        });
-
-        findViewById(R.id.staffBtnMenu).setOnClickListener(v -> {
-            Intent intent = new Intent(StaffSettingsActivity.this, StaffMenuDashboardActivity.class);
-            startActivity(intent);
-        });
-
-        findViewById(R.id.btnProfile).setOnClickListener(v -> {
-            // Already on this screen
-        });
+        findViewById(R.id.btnHome).setOnClickListener(v -> startActivity(new Intent(this, StaffDashboardActivity.class)));
+        findViewById(R.id.btnReservations).setOnClickListener(v -> startActivity(new Intent(this, StaffReservationDashboardActivity.class)));
+        findViewById(R.id.staffBtnMenu).setOnClickListener(v -> startActivity(new Intent(this, StaffMenuDashboardActivity.class)));
+        findViewById(R.id.btnProfile).setOnClickListener(v -> {});
     }
 }

@@ -37,7 +37,6 @@ public class MenuCategoryActivity extends AppCompatActivity {
         menuAdapter = new GuestMenuAdapter(menuList);
         rvMenuItems.setAdapter(menuAdapter);
 
-        // Bottom Navigation
         findViewById(R.id.btnReservations).setOnClickListener(v -> {
             Intent intent = new Intent(MenuCategoryActivity.this, CustomerReservationDashboardActivity.class);
             startActivity(intent);
