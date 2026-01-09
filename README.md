@@ -1,6 +1,6 @@
 A high fidelity restaurant app prototype
 
-To access the staff facing app enter "staff" into the username on the login page then click login.
+To access the staff facing app enter "staff" into the username and "password123" into the password field on the login page then click login.
 
 ### Third-Party Resources
 
